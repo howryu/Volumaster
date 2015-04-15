@@ -12,9 +12,12 @@ public class MyDBHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME = "rules";
     public static final String COLUMN_ID = "rid";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_DATE = "date";
     public static final String COLUMN_START_TIME = "start_time";
     public static final String COLUMN_END_TIME = "end_time";
-    public static final String COLUMN_VTYPE = "vol_type";
+    public static final String COLUMN_VOL = "vol";
+
 
     private static final String DATABASE_NAME = "rules.db";
     private static final int DATABASE_VERSION = 1;
@@ -23,9 +26,11 @@ public class MyDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE =
             "create table " + TABLE_NAME + "(" +
                     COLUMN_ID + " integer primary key autoincrement, " +
+                    COLUMN_TITLE + "text not null" +
+                    COLUMN_DATE + "text not null" +
                     COLUMN_START_TIME + " text not null, " +
                     COLUMN_END_TIME + " text not null, " +
-                    COLUMN_VTYPE + " text not null" +
+                    COLUMN_VOL + " text not null" +
                     ");";
 
     public MyDBHelper(Context context) {

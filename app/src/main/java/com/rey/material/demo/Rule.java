@@ -5,14 +5,26 @@ package com.rey.material.demo;
  */
 public class Rule {
     private long id;
+    private String title;
+    private String date;
     private String start_time;
     private String end_time;
     private String volume;
 
-    public Rule(String s, String e, String t) {
+    public Rule(String t, String d, String s, String e, String v) {
+        title = t;
+        date = d;
         start_time = s;
         end_time = e;
-        volume = t;
+        volume = v;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     public String getStart_time () {
