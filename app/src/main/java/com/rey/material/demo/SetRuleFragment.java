@@ -21,7 +21,11 @@ import com.rey.material.widget.Button;
 import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Slider;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by howryu on 4/13/15.
  */
@@ -62,10 +66,10 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
         bt_sumbit.setOnClickListener(new OnClickListener(){
             public void onClick(View view){
-                Rule r = new Rule("06:00", "07:00", "3");
-                Log.d("DB", "Before Insert rule in setting " + myDB.select().size());
-                myDB.insert(r);
-                Log.d("DB", "After Insert rule in setting " + myDB.select().size());
+                TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
+                String message = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
+
+                Log.d("submit", startTimeText.getText().toString());
                 Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
             }
         });
