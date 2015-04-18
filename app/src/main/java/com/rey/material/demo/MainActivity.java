@@ -45,11 +45,11 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
     private ToolbarManager mToolbarManager;
     private SnackBar mSnackBar;
 
-//    private Tab[] mItems = new Tab[]{Tab.PROGRESS, Tab.BUTTONS, Tab.FAB, Tab.SWITCHES, Tab.SLIDERS,
-//            Tab.SPINNERS, Tab.TEXTFIELDS, Tab.SNACKBARS, Tab.DIALOGS, Tab.SETRULE, Tab.SETTING,
-//            Tab.CALENDARVIEW, Tab.LISTVIEW};
-    private Tab[] mItems = new Tab[]{Tab.SETRULE, Tab.SETTING,
+    private Tab[] mItems = new Tab[]{Tab.PROGRESS, Tab.BUTTONS, Tab.FAB, Tab.SWITCHES, Tab.SLIDERS,
+            Tab.SPINNERS, Tab.TEXTFIELDS, Tab.SNACKBARS, Tab.DIALOGS, Tab.SETRULE, Tab.SETTING,
             Tab.CALENDARVIEW, Tab.LISTVIEW};
+//    private Tab[] mItems = new Tab[]{Tab.SETRULE, Tab.SETTING,
+//            Tab.CALENDARVIEW, Tab.LISTVIEW};
 
     public static MyDB myDB;
 
@@ -172,15 +172,15 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
     }
 
     public enum Tab {
-//	    PROGRESS ("Progresses"),
-//	    BUTTONS ("Buttons"),
-//        FAB ("FABs"),
-//	    SWITCHES ("Switches"),
-//        SLIDERS ("Sliders"),
-//        SPINNERS ("Spinners"),
-//	    TEXTFIELDS ("TextFields"),
-//	    SNACKBARS ("SnackBars"),
-//        DIALOGS ("Dialogs"),
+	    PROGRESS ("Progresses"),
+	    BUTTONS ("Buttons"),
+        FAB ("FABs"),
+	    SWITCHES ("Switches"),
+        SLIDERS ("Sliders"),
+        SPINNERS ("Spinners"),
+	    TEXTFIELDS ("TextFields"),
+	    SNACKBARS ("SnackBars"),
+        DIALOGS ("Dialogs"),
         SETRULE("SetRule"),
         SETTING("Setting"),
         CALENDARVIEW("CalendarView"),
@@ -292,26 +292,26 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
     			ArrayList<Fragment> mActive = (ArrayList<Fragment>)sActiveField.get(fm);
     			if(mActive != null){
     				for(Fragment fragment : mActive){
-//    					if(fragment instanceof ProgressFragment)
-//    						setFragment(Tab.PROGRESS, fragment);
-//    					else if(fragment instanceof ButtonFragment)
-//    						setFragment(Tab.BUTTONS, fragment);
-//                        else if(fragment instanceof FabFragment)
-//                            setFragment(Tab.FAB, fragment);
-//    					else if(fragment instanceof SwitchesFragment)
-//    						setFragment(Tab.SWITCHES, fragment);
-//                        else if(fragment instanceof SliderFragment)
-//                            setFragment(Tab.SLIDERS, fragment);
-//                        else if(fragment instanceof SpinnersFragment)
-//                            setFragment(Tab.SPINNERS, fragment);
-//    					else if(fragment instanceof TextfieldFragment)
-//    						setFragment(Tab.TEXTFIELDS, fragment);
-//    					else if(fragment instanceof SnackbarFragment)
-//    						setFragment(Tab.SNACKBARS, fragment);
-//                        else if(fragment instanceof DialogsFragment)
-//                            setFragment(Tab.DIALOGS, fragment);
-//                        else if(fragment instanceof SetRuleFragment)
-                        if(fragment instanceof SetRuleFragment)
+    					if(fragment instanceof ProgressFragment)
+    						setFragment(Tab.PROGRESS, fragment);
+    					else if(fragment instanceof ButtonFragment)
+    						setFragment(Tab.BUTTONS, fragment);
+                        else if(fragment instanceof FabFragment)
+                            setFragment(Tab.FAB, fragment);
+    					else if(fragment instanceof SwitchesFragment)
+    						setFragment(Tab.SWITCHES, fragment);
+                        else if(fragment instanceof SliderFragment)
+                            setFragment(Tab.SLIDERS, fragment);
+                        else if(fragment instanceof SpinnersFragment)
+                            setFragment(Tab.SPINNERS, fragment);
+    					else if(fragment instanceof TextfieldFragment)
+    						setFragment(Tab.TEXTFIELDS, fragment);
+    					else if(fragment instanceof SnackbarFragment)
+    						setFragment(Tab.SNACKBARS, fragment);
+                        else if(fragment instanceof DialogsFragment)
+                            setFragment(Tab.DIALOGS, fragment);
+                        else if(fragment instanceof SetRuleFragment)
+//                        if(fragment instanceof SetRuleFragment)
                             setFragment(Tab.SETRULE, fragment);
                         else if(fragment instanceof SettingFragment)
                             setFragment(Tab.SETTING, fragment);
@@ -337,33 +337,33 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         public Fragment getItem(int position) {
 			if(mFragments[position] == null){
 	        	switch (mTabs[position]) {
-//					case PROGRESS:
-//						mFragments[position] = ProgressFragment.newInstance();
-//						break;
-//					case BUTTONS:
-//						mFragments[position] = ButtonFragment.newInstance();
-//						break;
-//                    case FAB:
-//                        mFragments[position] = FabFragment.newInstance();
-//                        break;
-//					case SWITCHES:
-//						mFragments[position] = SwitchesFragment.newInstance();
-//						break;
-//                    case SLIDERS:
-//                        mFragments[position] = SliderFragment.newInstance();
-//                        break;
-//                    case SPINNERS:
-//                        mFragments[position] = SpinnersFragment.newInstance();
-//                        break;
-//					case TEXTFIELDS:
-//						mFragments[position] = TextfieldFragment.newInstance();
-//						break;
-//					case SNACKBARS:
-//						mFragments[position] = SnackbarFragment.newInstance();
-//						break;
-//                    case DIALOGS:
-//                        mFragments[position] = DialogsFragment.newInstance();
-//                        break;
+					case PROGRESS:
+						mFragments[position] = ProgressFragment.newInstance();
+						break;
+					case BUTTONS:
+						mFragments[position] = ButtonFragment.newInstance();
+						break;
+                    case FAB:
+                        mFragments[position] = FabFragment.newInstance();
+                        break;
+					case SWITCHES:
+						mFragments[position] = SwitchesFragment.newInstance();
+						break;
+                    case SLIDERS:
+                        mFragments[position] = SliderFragment.newInstance();
+                        break;
+                    case SPINNERS:
+                        mFragments[position] = SpinnersFragment.newInstance();
+                        break;
+					case TEXTFIELDS:
+						mFragments[position] = TextfieldFragment.newInstance();
+						break;
+					case SNACKBARS:
+						mFragments[position] = SnackbarFragment.newInstance();
+						break;
+                    case DIALOGS:
+                        mFragments[position] = DialogsFragment.newInstance();
+                        break;
                     case SETRULE:
                         mFragments[position] = SetRuleFragment.newInstance();
                         break;
