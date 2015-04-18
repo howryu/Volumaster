@@ -62,9 +62,9 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
         bt_sumbit.setOnClickListener(new OnClickListener(){
             public void onClick(View view){
-                //Rule r = new Rule("06:00", "07:00", "3");
+                Rule r = new Rule("06:00", "07:00", "3");
                 Log.d("DB", "Before Insert rule in setting " + myDB.select().size());
-                //myDB.insert(r);
+                myDB.insert(r);
                 Log.d("DB", "After Insert rule in setting " + myDB.select().size());
                 Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
             }

@@ -133,34 +133,31 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
 
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        Log.d("Calendar", "newyear" + newYear + "month" + "newMonth" + newMonth);
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
         List <Rule> rulesInDB = myDB.select();
-        Log.d("Calendar", "rule list size = " + rulesInDB.size());
         for (int i=0; i<rulesInDB.size(); i++){
-//            Log.d("Calendar", "rule  = " + rulesInDB.get(i).getTitle());
-            WeekViewEvent e = RuleToEvent(rulesInDB.get(i), newYear, newMonth);
-            events.add(e);
-          //  Log.d("DB", "Get item from calendarview:" + rulesInDB.get(i).getStart_time() + "   "
-          //          + rulesInDB.get(i).getEnd_time() + "size " + rulesInDB.size());
+            //WeekViewEvent e = RuleToEvent(rulesInDB.get(i));
+            //events.add(e);
+            Log.d("DB", "Get item from calendarview:" + rulesInDB.get(i).getStart_time() + "   "
+                    + rulesInDB.get(i).getEnd_time() + "size " + rulesInDB.size());
         }
 
         // Populate the week view with some events.
 
 
-//        Calendar startTime = Calendar.getInstance();
-//        startTime.set(Calendar.HOUR_OF_DAY, 3);
-//        startTime.set(Calendar.MINUTE, 0);
-//        startTime.set(Calendar.MONTH, newMonth-1);
-//        startTime.set(Calendar.YEAR, newYear);
-//        Calendar endTime = (Calendar) startTime.clone();
-//        endTime.add(Calendar.HOUR, 1);
-//        endTime.set(Calendar.MONTH, newMonth-1);
-//        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
-//        event.setColor(getResources().getColor(R.color.event_color_01));
-//        events.add(event);
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, 3);
+        startTime.set(Calendar.MINUTE, 0);
+        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.YEAR, newYear);
+        Calendar endTime = (Calendar) startTime.clone();
+        endTime.add(Calendar.HOUR, 1);
+        endTime.set(Calendar.MONTH, newMonth-1);
+        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
+        event.setColor(getResources().getColor(R.color.event_color_01));
+        events.add(event);
 
-        /*startTime = Calendar.getInstance();
+        startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 3);
         startTime.set(Calendar.MINUTE, 30);
         startTime.set(Calendar.MONTH, newMonth-1);
@@ -173,7 +170,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         event.setColor(getResources().getColor(R.color.event_color_02));
         events.add(event);
 
-        /*startTime = Calendar.getInstance();
+        startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 4);
         startTime.set(Calendar.MINUTE, 20);
         startTime.set(Calendar.MONTH, newMonth-1);
@@ -200,7 +197,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 5);
         startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, Month-1);
+        startTime.set(Calendar.MONTH, newMonth-1);
         startTime.set(Calendar.YEAR, newYear);
         startTime.add(Calendar.DATE, 1);
         endTime = (Calendar) startTime.clone();
@@ -244,7 +241,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         endTime.add(Calendar.HOUR_OF_DAY, 3);
         event = new WeekViewEvent(5, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_02));
-        events.add(event);*/
+        events.add(event);
 
         return events;
     }
@@ -265,66 +262,19 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         Toast.makeText(this.getActivity().getBaseContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
 
-    private WeekViewEvent RuleToEvent(Rule r, int newYear, int newMonth){
-
-        String[] date = r.getDate().split("-");
-        int year = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int day = Integer.parseInt(date[2]);
-        Log.d("Calendar", r.getTitle() + "start time:  " + year + " " + month + " " + day);
-
+    /*private WeekViewEvent RuleToEvent(Rule r, int newYear, int newMonth){
         Calendar startTime = Calendar.getInstance();
-        Calendar endTime = Calendar.getInstance();
         startTime.set(Calendar.YEAR, newYear);
         startTime.set(Calendar.MONTH, newMonth);
-        startTime.set(Calendar.DAY_OF_MONTH, day);
-        endTime.set(Calendar.YEAR, newYear);
-        endTime.set(Calendar.MONTH, newMonth);
-        endTime.set(Calendar.DAY_OF_MONTH, day);
+        startTime.set(Calendar.DAY_OF_MONTH, 18);
+        startTime.set(Calendar.HOUR_OF_DAY, )
 
-        String[] time = r.getStart_time().split(":");
-        int hour = Integer.parseInt(time[0]);
-        int minute = Integer.parseInt(time[1]);
+        String s = r.getStart_time();
 
-        startTime.set(Calendar.HOUR_OF_DAY, hour);
-        startTime.set(Calendar.MINUTE, minute);
-
-        Log.d("Calendar", "start time: " + hour + " " + minute);
-
-        time = r.getEnd_time().split(":");
-        hour = Integer.parseInt(time[0]);
-        minute = Integer.parseInt(time[1]);
-
-        endTime.set(Calendar.HOUR_OF_DAY, hour);
-        endTime.set(Calendar.MINUTE, minute);
-
-        Log.d("Calendar", "end time: " + hour + " " + minute);
-
-        String title = r.getTitle();
-        WeekViewEvent e = new WeekViewEvent(1, title, startTime, endTime);
-        e.setColor(getResources().getColor(R.color.event_color_02));
-        /*WeekViewEvent event = null;
-        if (newMonth == 4) {
-
-
-            Calendar startTime = Calendar.getInstance();
-            startTime.set(Calendar.HOUR_OF_DAY, 3);
-            startTime.set(Calendar.MINUTE, 30);
-            startTime.set(Calendar.MONTH, newMonth);
-            startTime.set(Calendar.YEAR, newYear);
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR_OF_DAY, 4);
-            endTime.set(Calendar.MINUTE, 30);
-            endTime.set(Calendar.MONTH, newMonth);
-
-
-            event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-            event.setColor(getResources().getColor(R.color.event_color_02));
-        }*/
-
-        return e;
+        String title = "Rule" + r.getId();
+        WeekViewEvent e = new WeekViewEvent(r.getId(), title, startTime, endTime);
     }
 
-
+    private setTime()*/
 
 }

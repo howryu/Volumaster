@@ -401,16 +401,8 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         if (requestCode == SYNC_CODE && resultCode == RESULT_OK) {
             Log.d("Calendar", "sync and ok");
             ArrayList<String> eventsToBeInserted = data.getStringArrayListExtra(EVENTSLIST);
-            Log.d("check size", "size = " + eventsToBeInserted.size());
             for (int i=0; i<eventsToBeInserted.size(); i++) {
-                String eventInfo = eventsToBeInserted.get(i);
-                String[] info = eventInfo.split("#");
-                String summary = info[0];
-                String date = info[1].substring(0, 10);
-                String start = info[1].substring(11,16);
-                String end = info[2].substring(11,16);
-                Rule r = new Rule(summary, date, start, end, "0");
-                myDB.insert(r);
+                Log.d("Calendar", eventsToBeInserted.get(i));
             }
 
         }

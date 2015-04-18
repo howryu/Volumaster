@@ -76,7 +76,6 @@ public class EventFetchTask extends AsyncTask<Void, Void, Void> {
 
         for (Event event : items) {
             DateTime start = event.getStart().getDateTime();
-            DateTime end = event.getEnd().getDateTime();
             if (start == null) {
                 // All-day events don't have start times, so just use
                 // the start date.
@@ -84,7 +83,7 @@ public class EventFetchTask extends AsyncTask<Void, Void, Void> {
 
             }
             eventStrings.add(
-                    String.format("%s#%s#%s", event.getSummary(), start, end));
+                    String.format("%s (%s)", event.getSummary(), start));
         }
         return eventStrings;
     }
