@@ -32,20 +32,20 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements ToolbarManager.OnToolbarGroupChangedListener {
 
-	private DrawerLayout dl_navigator;
-	private FrameLayout fl_drawer;
-	private ListView lv_drawer;
-	private static CustomViewPager vp;
-	private TabPageIndicator tpi;
-	
-	private DrawerAdapter mDrawerAdapter;
-	private PagerAdapter mPagerAdapter;
-	
-	private Toolbar mToolbar;
+    private DrawerLayout dl_navigator;
+    private FrameLayout fl_drawer;
+    private ListView lv_drawer;
+    private static CustomViewPager vp;
+    private TabPageIndicator tpi;
+
+    private DrawerAdapter mDrawerAdapter;
+    private PagerAdapter mPagerAdapter;
+
+    private Toolbar mToolbar;
     private ToolbarManager mToolbarManager;
     private SnackBar mSnackBar;
 
-//    private Tab[] mItems = new Tab[]{Tab.PROGRESS, Tab.BUTTONS, Tab.FAB, Tab.SWITCHES, Tab.SLIDERS,
+    //    private Tab[] mItems = new Tab[]{Tab.PROGRESS, Tab.BUTTONS, Tab.FAB, Tab.SWITCHES, Tab.SLIDERS,
 //            Tab.SPINNERS, Tab.TEXTFIELDS, Tab.SNACKBARS, Tab.DIALOGS, Tab.SETRULE, Tab.SETTING,
 //            Tab.CALENDARVIEW, Tab.LISTVIEW};
     private Tab[] mItems = new Tab[]{Tab.SETRULE, Tab.SETTING,
@@ -58,10 +58,10 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
 
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
 
         myDB = MyDB.getInstance(this);
         try {
@@ -69,13 +69,13 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         } catch (SQLException e) {
             e.printStackTrace();
         }
-				
-		dl_navigator = (DrawerLayout)findViewById(R.id.main_dl);
-		fl_drawer = (FrameLayout)findViewById(R.id.main_fl_drawer);
-		lv_drawer = (ListView)findViewById(R.id.main_lv_drawer);
-		mToolbar = (Toolbar)findViewById(R.id.main_toolbar);
-		vp = (CustomViewPager)findViewById(R.id.main_vp);
-		tpi = (TabPageIndicator)findViewById(R.id.main_tpi);
+
+        dl_navigator = (DrawerLayout)findViewById(R.id.main_dl);
+        fl_drawer = (FrameLayout)findViewById(R.id.main_fl_drawer);
+        lv_drawer = (ListView)findViewById(R.id.main_lv_drawer);
+        mToolbar = (Toolbar)findViewById(R.id.main_toolbar);
+        vp = (CustomViewPager)findViewById(R.id.main_vp);
+        tpi = (TabPageIndicator)findViewById(R.id.main_tpi);
         mSnackBar = (SnackBar)findViewById(R.id.main_sn);
 
         mToolbarManager = new ToolbarManager(this, mToolbar, 0, R.style.ToolbarRippleStyle, R.anim.abc_fade_in, R.anim.abc_fade_out);
@@ -100,39 +100,39 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
 
         });
         mToolbarManager.registerOnToolbarGroupChangedListener(this);
-		
-		mDrawerAdapter = new DrawerAdapter();
-		lv_drawer.setAdapter(mDrawerAdapter);
-		
-		mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mItems);
-		vp.setAdapter(mPagerAdapter);
-		tpi.setViewPager(vp);
-		tpi.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			
-			@Override
-			public void onPageSelected(int position) {
-				mDrawerAdapter.setSelected(mItems[position]);
+
+        mDrawerAdapter = new DrawerAdapter();
+        lv_drawer.setAdapter(mDrawerAdapter);
+
+        mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mItems);
+        vp.setAdapter(mPagerAdapter);
+        tpi.setViewPager(vp);
+        tpi.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                mDrawerAdapter.setSelected(mItems[position]);
                 mSnackBar.dismiss();
-			}
-			
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {}
-			
-			@Override
-			public void onPageScrollStateChanged(int state) {}
-			
-		});
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+
+        });
 
 //        mDrawerAdapter.setSelected(Tab.PROGRESS);
         mDrawerAdapter.setSelected(Tab.SETRULE);
-		vp.setCurrentItem(0);
-	}
+        vp.setCurrentItem(0);
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         mToolbarManager.createMenu(R.menu.menu_main);
-		return true;
-	}
+        return true;
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -172,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
     }
 
     public enum Tab {
-//	    PROGRESS ("Progresses"),
+        //	    PROGRESS ("Progresses"),
 //	    BUTTONS ("Buttons"),
 //        FAB ("FABs"),
 //	    SWITCHES ("Switches"),
@@ -185,75 +185,75 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         SETTING("Setting"),
         CALENDARVIEW("CalendarView"),
         LISTVIEW("ListView");
-	    private final String name;       
+        private final String name;
 
-	    private Tab(String s) {
-	        name = s;
-	    }
+        private Tab(String s) {
+            name = s;
+        }
 
-	    public boolean equalsName(String otherName){
-	        return (otherName != null) && name.equals(otherName);
-	    }
+        public boolean equalsName(String otherName){
+            return (otherName != null) && name.equals(otherName);
+        }
 
-	    public String toString(){
-	       return name;
-	    }
+        public String toString(){
+            return name;
+        }
 
-	}
-	
-	class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
+    }
 
-		private Tab mSelectedTab;
-		
-		public void setSelected(Tab tab){
-			if(tab != mSelectedTab){
-				mSelectedTab = tab;
-				notifyDataSetInvalidated();
-			}
-		}
-		
-		public Tab getSelectedTab(){
-			return mSelectedTab;
-		}
-		
-		@Override
-		public int getCount() {
-			return mItems.length;
-		}
+    class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
 
-		@Override
-		public Object getItem(int position) {
-			return mItems[position];
-		}
+        private Tab mSelectedTab;
 
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-		
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			if(v == null) {
+        public void setSelected(Tab tab){
+            if(tab != mSelectedTab){
+                mSelectedTab = tab;
+                notifyDataSetInvalidated();
+            }
+        }
+
+        public Tab getSelectedTab(){
+            return mSelectedTab;
+        }
+
+        @Override
+        public int getCount() {
+            return mItems.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mItems[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if(v == null) {
                 v = LayoutInflater.from(MainActivity.this).inflate(R.layout.row_drawer, null);
                 v.setOnClickListener(this);
             }
 
             v.setTag(position);
-			Tab tab = (Tab)getItem(position);
-			((TextView)v).setText(tab.toString());
-			
-			if(tab == mSelectedTab) {
+            Tab tab = (Tab)getItem(position);
+            ((TextView)v).setText(tab.toString());
+
+            if(tab == mSelectedTab) {
                 v.setBackgroundColor(ThemeUtil.colorPrimary(MainActivity.this, 0));
                 ((TextView)v).setTextColor(0xFFFFFFFF);
             }
-			else {
+            else {
                 v.setBackgroundResource(0);
                 ((TextView)v).setTextColor(0xFF000000);
             }
-			
-			return v;
-		}
+
+            return v;
+        }
 
         @Override
         public void onClick(View v) {
@@ -262,36 +262,36 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
             dl_navigator.closeDrawer(fl_drawer);
         }
     }
-	
-	private static class PagerAdapter extends FragmentStatePagerAdapter {
-		
-		Fragment[] mFragments;
-		Tab[] mTabs; 
-				
-		private static final Field sActiveField;
-		
-		static {
-			Field f = null;
-			try {
-				Class<?> c = Class.forName("android.support.v4.app.FragmentManagerImpl");
-				f = c.getDeclaredField("mActive");
-				f.setAccessible(true);   
-			} catch (Exception e) {}
-			
-			sActiveField = f;
-		}
-		
+
+    private static class PagerAdapter extends FragmentStatePagerAdapter {
+
+        Fragment[] mFragments;
+        Tab[] mTabs;
+
+        private static final Field sActiveField;
+
+        static {
+            Field f = null;
+            try {
+                Class<?> c = Class.forName("android.support.v4.app.FragmentManagerImpl");
+                f = c.getDeclaredField("mActive");
+                f.setAccessible(true);
+            } catch (Exception e) {}
+
+            sActiveField = f;
+        }
+
         public PagerAdapter(FragmentManager fm, Tab[] tabs) {
-            super(fm);    
+            super(fm);
             mTabs = tabs;
             mFragments = new Fragment[mTabs.length];
-       
-            
+
+
             //dirty way to get reference of cached fragment
             try{
-    			ArrayList<Fragment> mActive = (ArrayList<Fragment>)sActiveField.get(fm);
-    			if(mActive != null){
-    				for(Fragment fragment : mActive){
+                ArrayList<Fragment> mActive = (ArrayList<Fragment>)sActiveField.get(fm);
+                if(mActive != null){
+                    for(Fragment fragment : mActive){
 //    					if(fragment instanceof ProgressFragment)
 //    						setFragment(Tab.PROGRESS, fragment);
 //    					else if(fragment instanceof ButtonFragment)
@@ -319,24 +319,24 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
                             setFragment(Tab.CALENDARVIEW, fragment);
                         else if(fragment instanceof ListViewFragment)
                             setFragment(Tab.LISTVIEW, fragment);
-    				}
-    			}
-    		}
-    		catch(Exception e){}
+                    }
+                }
+            }
+            catch(Exception e){}
         }
-        
+
         private void setFragment(Tab tab, Fragment f){
-        	for(int i = 0; i < mTabs.length; i++)
-        		if(mTabs[i] == tab){
-        			mFragments[i] = f;
-        			break;
-        		}
+            for(int i = 0; i < mTabs.length; i++)
+                if(mTabs[i] == tab){
+                    mFragments[i] = f;
+                    break;
+                }
         }
-        
-		@Override
+
+        @Override
         public Fragment getItem(int position) {
-			if(mFragments[position] == null){
-	        	switch (mTabs[position]) {
+            if(mFragments[position] == null){
+                switch (mTabs[position]) {
 //					case PROGRESS:
 //						mFragments[position] = ProgressFragment.newInstance();
 //						break;
@@ -377,18 +377,18 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
                         mFragments[position] = ListViewFragment.newInstance();
                         ((ListViewFragment) mFragments[position]).setViewPager(vp);
                         break;
-				}
-			}
-						
-			return mFragments[position];		
-        }
-				
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return mTabs[position].toString().toUpperCase();
-		}
+                }
+            }
 
-		@Override
+            return mFragments[position];
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTabs[position].toString().toUpperCase();
+        }
+
+        @Override
         public int getCount() {
             return mFragments.length;
         }
@@ -401,8 +401,16 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         if (requestCode == SYNC_CODE && resultCode == RESULT_OK) {
             Log.d("Calendar", "sync and ok");
             ArrayList<String> eventsToBeInserted = data.getStringArrayListExtra(EVENTSLIST);
+            Log.d("check size", "size = " + eventsToBeInserted.size());
             for (int i=0; i<eventsToBeInserted.size(); i++) {
-                Log.d("Calendar", eventsToBeInserted.get(i));
+                String eventInfo = eventsToBeInserted.get(i);
+                String[] info = eventInfo.split("#");
+                String summary = info[0];
+                String date = info[1].substring(0, 10);
+                String start = info[1].substring(11,16);
+                String end = info[2].substring(11,16);
+                Rule r = new Rule(summary, date, start, end, "0");
+                myDB.insert(r);
             }
 
         }

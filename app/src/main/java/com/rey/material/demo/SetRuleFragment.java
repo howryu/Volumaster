@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +23,6 @@ import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Slider;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -82,8 +80,9 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
         bt_sumbit.setOnClickListener(new OnClickListener(){
             public void onClick(View view){
-//                if (editText.getText() != null)
-                    rule.setTitle(editText.getText().toString());
+//                Log.d("submit", "editText" + editText.getText().toString());
+//                if (editText.getText().toString() != "")
+//                    rule.setTitle(editText.getText().toString());
                 myDB.insert(rule);
                 Log.d("submit", rule.getTitle());
                 Log.d("submit", rule.getDate());
@@ -183,8 +182,9 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                         String date = dialog.getFormattedDate(SimpleDateFormat.getDateInstance());
                         //Toast.makeText(fragment.getDialog().getContext(), "Date is " + date, Toast.LENGTH_SHORT).show();
                         dateText.setText(date);
+
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        rule.setDate(dialog.getFormattedDate(dateFormat.getDateInstance()));
+                        rule.setDate(dateFormat.format(dialog.getDate()));
                         super.onPositiveActionClicked(fragment);
                     }
 
