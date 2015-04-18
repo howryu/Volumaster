@@ -302,7 +302,8 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
 
         String title = r.getTitle();
         WeekViewEvent e = new WeekViewEvent(r.getId(), title, startTime, endTime);
-        e.setColor(getResources().getColor(R.color.event_color_02));
+        Log.d("Volume", r.getTitle() + "'s vol:" + r.getVolume());
+        e.setColor(getResources().getColor(volumeToColor(Integer.parseInt(r.getVolume()))));
         /*WeekViewEvent event = null;
         if (newMonth == 4) {
 
@@ -323,6 +324,21 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         }*/
 
         return e;
+    }
+
+    private int volumeToColor(int volume){
+        if (volume <= 3){
+            return R.color.event_color_01;
+        }
+        else if (volume > 3 && volume <=7){
+            return R.color.event_color_03;
+        }
+        else if (volume >7 && volume <=11){
+            return R.color.event_color_04;
+        }
+        else{
+            return R.color.event_color_02;
+        }
     }
 
 

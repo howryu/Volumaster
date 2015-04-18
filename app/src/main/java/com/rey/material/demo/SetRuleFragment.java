@@ -82,7 +82,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
             public void onClick(View view){
 //                Log.d("submit", "editText" + editText.getText().toString());
 //                if (editText.getText().toString() != "")
-//                    rule.setTitle(editText.getText().toString());
+                rule.setTitle(editText.getText().toString());
                 myDB.insert(rule);
                 Log.d("submit", rule.getTitle());
                 Log.d("submit", rule.getDate());
