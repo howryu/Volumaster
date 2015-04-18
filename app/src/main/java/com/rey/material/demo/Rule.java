@@ -19,6 +19,8 @@ public class Rule {
         volume = v;
     }
 
+    public Rule() { }
+
     public String getDate() {
         return this.date;
     }
@@ -46,5 +48,15 @@ public class Rule {
     public long getId() {
         return this.id;
     }
+
+    public void setTitle(String title) {this.title = title;}
+
+    public void setDate(String date) {this.date = date;}
+
+    public void setStart_time(String startTime) {this.start_time = startTime;}
+
+    public void setEnd_time(String endTime) {this.end_time = endTime;}
+
+    public void setVolume(String volume) {this.volume = volume;}
 
 }
