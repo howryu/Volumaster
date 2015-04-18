@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.EditText;
 import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Slider;
 
@@ -38,6 +40,8 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
     private Activity main;
     private MyDB myDB;
 
+    private Rule rule;
+
     public static SetRuleFragment newInstance(){
         SetRuleFragment fragment = new SetRuleFragment();
         return fragment;
@@ -56,6 +60,30 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         endTimeText = (TextView)v.findViewById(R.id.end_time_text);
         dateText = (TextView)v.findViewById(R.id.date_text);
 
+
+        Date date = new Date();
+        DateFormat timeTextFormat = new SimpleDateFormat("HH:mm a");
+        startTimeText.setText(timeTextFormat.format(date));
+        endTimeText.setText(timeTextFormat.format(date));
+        dateText.setText(SimpleDateFormat.getDateInstance().format(date));
+
+        final EditText editText = (EditText)v.findViewById(R.id.textfield_with_label);
+//        editText.setOnKeyListener(new View.OnKeyListener() {
+//
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+////                    rule.setTitle(editText.getText().toString());
+//                    Toast.makeText(main,  editText.getText().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//                return true;
+//            }
+//
+//        });
+
+
+
         main = this.getActivity();
 
         myDB = MyDB.getInstance(container.getContext());
@@ -64,12 +92,19 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         bt_end_time_picker.setOnClickListener(this);
         bt_date_picker.setOnClickListener(this);
 
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "50");
+
         bt_sumbit.setOnClickListener(new OnClickListener(){
             public void onClick(View view){
-                TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
-                String message = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
-
-                Log.d("submit", startTimeText.getText().toString());
+                rule.setTitle(editText.getText().toString());
+                myDB.insert(rule);
+                Log.d("submit", rule.getTitle());
+                Log.d("submit", rule.getDate());
+                Log.d("submit", rule.getStart_time());
+                Log.d("submit", rule.getEnd_time());
+                Log.d("submit", rule.getVolume());
                 Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
             }
         });
@@ -77,11 +112,12 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
         Slider sl_discrete = (Slider)v.findViewById(R.id.volume_slider);
         tv_discrete = (TextView)v.findViewById(R.id.slider_volume_text);
-        tv_discrete.setText(String.format("value=%d", sl_discrete.getValue()));
+        tv_discrete.setText(String.format("volume   %d", sl_discrete.getValue()));
         sl_discrete.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
             @Override
             public void onPositionChanged(Slider view, float oldPos, float newPos, int oldValue, int newValue) {
-                tv_discrete.setText(String.format("value=%d", newValue));
+                rule.setVolume(Integer.toString(newValue));
+                tv_discrete.setText(String.format("volume   %d", newValue));
             }
         });
 
@@ -99,6 +135,8 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         super.onResume();
     }
 
+
+
     @Override
     public void onClick(View v){
         if (v instanceof FloatingActionButton){
@@ -114,6 +152,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     public void onPositiveActionClicked(DialogFragment fragment) {
                         TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
                         String message = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
+                        rule.setStart_time(dialog.getHour() + ":" + dialog.getMinute());
                         //Toast.makeText(fragment.getDialog().getContext(), "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                         startTimeText.setText(message);
                         super.onPositiveActionClicked(fragment);
@@ -136,6 +175,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                         TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
                         String message = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
                         //Toast.makeText(fragment.getDialog().getContext(), "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
+                        rule.setEnd_time(dialog.getHour() + ":" + dialog.getMinute());
                         endTimeText.setText(message);
                         super.onPositiveActionClicked(fragment);
                     }

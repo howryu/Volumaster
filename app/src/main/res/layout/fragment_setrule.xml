@@ -13,6 +13,18 @@
         android:gravity="center"
         android:padding="8dp">
 
+        <com.rey.material.widget.EditText
+            style="@style/Material.Widget.EditText.Light"
+            android:id="@+id/textfield_with_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FF000000"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:inputType="text"
+            android:hint="Set Rule Title"
+            app:et_inputId="@+id/textfield_et_label_input"
+            app:et_supportMode="none" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,15 +51,6 @@
             android:textColor="#FF000000"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
             android:gravity="center"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/title_text"
-            android:padding="8dp"
-            android:textColor="#FF000000"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="Picker"/>
 
         <LinearLayout
             android:layout_width="match_parent"
