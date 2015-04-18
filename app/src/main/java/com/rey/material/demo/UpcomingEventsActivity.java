@@ -213,9 +213,10 @@ public class UpcomingEventsActivity extends Activity {
                     mStatusText.setText("Your upcoming events retrieved using" +
                             " the Google Calendar API:");
                     mEventText.setText(TextUtils.join("\n\n", eventStrings));
-                    for (int i=0; i<eventStrings.size(); i++){
-                        eventsList.add(eventStrings.get(i));
-                    }
+                    if (eventStrings.size() != eventsList.size())
+                        for (int i=0; i<eventStrings.size(); i++){
+                            eventsList.add(eventStrings.get(i));
+                        }
                 }
             }
         });

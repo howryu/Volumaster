@@ -67,7 +67,7 @@
                 android:layout_weight="0.4"
                 android:textColor="#FF2196F3"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
-                android:text="Date Picker"
+                android:text="Date"
                 app:rd_delayClick="true"/>
 
             <View
@@ -104,7 +104,7 @@
                 android:layout_weight="0.4"
                 android:textColor="#FF2196F3"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
-                android:text="Start Time Picker"
+                android:text="Start Time"
                 app:rd_delayClick="true"/>
 
             <View
@@ -141,7 +141,7 @@
                 android:layout_weight="0.4"
                 android:textColor="#FF2196F3"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
-                android:text="End Time Picker"
+                android:text="End Time"
                 app:rd_delayClick="true"/>
 
             <View
