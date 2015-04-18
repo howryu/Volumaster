@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -213,9 +214,11 @@ public class UpcomingEventsActivity extends Activity {
                     mStatusText.setText("Your upcoming events retrieved using" +
                             " the Google Calendar API:");
                     mEventText.setText(TextUtils.join("\n\n", eventStrings));
-                    for (int i=0; i<eventStrings.size(); i++){
-                        eventsList.add(eventStrings.get(i));
-                    }
+                    Log.d("check size", "upcoming size = " + eventStrings.size());
+                    if (eventStrings.size() != eventsList.size())
+                        for (int i=0; i<eventStrings.size(); i++){
+                            eventsList.add(eventStrings.get(i));
+                        }
                 }
             }
         });
