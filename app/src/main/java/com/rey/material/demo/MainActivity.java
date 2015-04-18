@@ -70,6 +70,9 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
             e.printStackTrace();
         }
 
+        //AudioManager am =  (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        //Log.d("Volume", "Max Vol" + new Integer(am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)).toString());
+
         dl_navigator = (DrawerLayout)findViewById(R.id.main_dl);
         fl_drawer = (FrameLayout)findViewById(R.id.main_fl_drawer);
         lv_drawer = (ListView)findViewById(R.id.main_lv_drawer);

@@ -301,7 +301,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         Log.d("Calendar", "end time: " + hour + " " + minute);
 
         String title = r.getTitle();
-        WeekViewEvent e = new WeekViewEvent(1, title, startTime, endTime);
+        WeekViewEvent e = new WeekViewEvent(r.getId(), title, startTime, endTime);
         e.setColor(getResources().getColor(R.color.event_color_02));
         /*WeekViewEvent event = null;
         if (newMonth == 4) {
