@@ -74,9 +74,10 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         bt_end_time_picker.setOnClickListener(this);
         bt_date_picker.setOnClickListener(this);
 
+        // set default rule values
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "50");
+        rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
 
         bt_sumbit.setOnClickListener(new OnClickListener(){
             public void onClick(View view){
