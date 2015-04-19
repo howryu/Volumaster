@@ -1,6 +1,9 @@
 package com.rey.material.demo;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
     private static final int TYPE_WEEK_VIEW = 3;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
+    private CustomViewPager vp;
 
     private MyDB myDB;
 
@@ -63,6 +67,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
 
         setHasOptionsMenu(true);
         myDB = MyDB.getInstance(container.getContext());
+
 
         return v;
     }
@@ -262,7 +267,32 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this.getActivity().getBaseContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        final WeekViewEvent e = event;
+        final Context mContext = this.getActivity();
+        //final Context currContext = this.getActivity();
+        //final Intent intent = this.getActivity().getIntent();
+        final CalendarViewFragment current = this;
+        android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setMessage("Confirm Deleting the Message?")
+                .setTitle("Delete");
+        builder.setPositiveButton("Ok",  new DialogInterface.OnClickListener(){
+           public void onClick(DialogInterface dialog, int id){
+               long ruleId = e.getId();
+               myDB.deleteById(ruleId);
+               //current.onCreateView(null, null, null);
+               Toast.makeText(mContext, "Rule Deleted Successfully", Toast.LENGTH_SHORT).show();
+           }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        //Toast.makeText(this.getActivity().getBaseContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     private WeekViewEvent RuleToEvent(Rule r, int newYear, int newMonth){
@@ -304,25 +334,6 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         WeekViewEvent e = new WeekViewEvent(r.getId(), title, startTime, endTime);
         Log.d("Volume", r.getTitle() + "'s vol:" + r.getVolume());
         e.setColor(getResources().getColor(volumeToColor(Integer.parseInt(r.getVolume()))));
-        /*WeekViewEvent event = null;
-        if (newMonth == 4) {
-
-
-            Calendar startTime = Calendar.getInstance();
-            startTime.set(Calendar.HOUR_OF_DAY, 3);
-            startTime.set(Calendar.MINUTE, 30);
-            startTime.set(Calendar.MONTH, newMonth);
-            startTime.set(Calendar.YEAR, newYear);
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR_OF_DAY, 4);
-            endTime.set(Calendar.MINUTE, 30);
-            endTime.set(Calendar.MONTH, newMonth);
-
-
-            event = new WeekViewEvent(10, getEventTitle(startTime), startTime, endTime);
-            event.setColor(getResources().getColor(R.color.event_color_02));
-        }*/
-
         return e;
     }
 
@@ -341,6 +352,6 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
         }
     }
 
-
+    public void setViewPager(CustomViewPager vp){ this.vp = vp; }
 
 }
