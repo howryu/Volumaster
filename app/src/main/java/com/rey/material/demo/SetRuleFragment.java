@@ -22,6 +22,7 @@ import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Slider;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -134,9 +135,32 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
             editText.setText(rule.getTitle());
             Log.d("TextTitle", editText.getText().toString());
 
-            bt_start_time_picker.setText(rule.getStart_time());
-            bt_end_time_picker.setText(rule.getEnd_time());
-            bt_date_picker.setText(rule.getDate());
+
+            String tmp;
+            // TODO
+            tmp = rule.getStart_time();
+            try {
+                date = timeFormat.parse(tmp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            bt_start_time_picker.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(date));
+            tmp = rule.getEnd_time();
+            try {
+                date = timeFormat.parse(tmp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            bt_end_time_picker.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(date));
+
+            tmp = rule.getDate();
+            try {
+                date = dateFormat.parse(tmp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            DateFormat dateFormatShown = new SimpleDateFormat("MMM dd, yyyy");
+            bt_date_picker.setText(dateFormatShown.format(date));
 
 
             bt_sumbit.setText("update");
@@ -184,8 +208,15 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     public void onPositiveActionClicked(DialogFragment fragment) {
                         TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
                         String message = dialog.getFormattedTime(DateFormat.getTimeInstance(DateFormat.SHORT));
-                        rule.setStart_time(dialog.getHour() + ":" + dialog.getMinute());
-                        //Toast.makeText(fragment.getDialog().getContext(), "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
+                        String hour;
+                        String min;
+                        if (dialog.getHour() < 10)
+                            hour = "0" + dialog.getHour();
+                        else hour = String.valueOf(dialog.getHour());
+                        if (dialog.getMinute() < 10)
+                            min = "0" + dialog.getMinute();
+                        else min = String.valueOf(dialog.getMinute());
+                        rule.setStart_time(hour + ":" + min);
                         bt_start_time_picker.setText(message);
                         super.onPositiveActionClicked(fragment);
                     }
@@ -206,8 +237,15 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     public void onPositiveActionClicked(DialogFragment fragment) {
                         TimePickerDialog dialog = (TimePickerDialog)fragment.getDialog();
                         String message = dialog.getFormattedTime(DateFormat.getTimeInstance(DateFormat.SHORT));
-                        //Toast.makeText(fragment.getDialog().getContext(), "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
-                        rule.setEnd_time(dialog.getHour() + ":" + dialog.getMinute());
+                        String hour;
+                        String min;
+                        if (dialog.getHour() < 10)
+                            hour = "0" + dialog.getHour();
+                        else hour = String.valueOf(dialog.getHour());
+                        if (dialog.getMinute() < 10)
+                            min = "0" + dialog.getMinute();
+                        else min = String.valueOf(dialog.getMinute());
+                        rule.setEnd_time(hour + ":" + min);
                         bt_end_time_picker.setText(message);
                         super.onPositiveActionClicked(fragment);
                     }
