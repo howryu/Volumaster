@@ -369,6 +369,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
 //                        break;
                     case SETRULE:
                         mFragments[position] = SetRuleFragment.newInstance();
+                        ((SetRuleFragment) mFragments[position]).setViewPager(vp);
                         break;
                     case SETTING:
                         mFragments[position] = SettingFragment.newInstance();

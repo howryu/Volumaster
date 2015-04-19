@@ -46,6 +46,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
     private Rule rule;
     private static long ruleId;
+    private CustomViewPager vp;
 
     public static SetRuleFragment newInstance(){
         ruleId = -1;
@@ -131,6 +132,12 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         }
         else{
             bt_cancel.setVisibility(View.VISIBLE);
+            bt_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    vp.setCurrentItem(0);
+                }
+            });
             rule = myDB.selectById(ruleId);
             editText.setText(rule.getTitle());
             Log.d("TextTitle", editText.getText().toString());
@@ -295,5 +302,6 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         Log.d("update", "set " + String.valueOf(this.ruleId));
     }
 
+    public void setViewPager(CustomViewPager vp){ this.vp = vp; }
 
 }
