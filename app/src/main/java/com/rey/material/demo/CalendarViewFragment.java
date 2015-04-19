@@ -282,6 +282,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
            public void onClick(DialogInterface dialog, int id){
                long ruleId = e.getId();
                myDB.deleteById(ruleId);
+               mWeekView.goToToday();
                //current.onCreateView(null, null, null);
                Toast.makeText(mContext, "Rule Deleted Successfully", Toast.LENGTH_SHORT).show();
            }

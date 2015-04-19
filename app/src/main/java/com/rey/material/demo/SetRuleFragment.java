@@ -57,17 +57,10 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         Button bt_sumbit = (Button)v.findViewById(R.id.button_submit);
         Button bt_date_picker = (Button)v.findViewById(R.id.button_date_picker);
         Button bt_cancel = (Button)v.findViewById(R.id.button_cancel);
-        if (ruleId == -1){
-            bt_cancel.setVisibility(View.GONE);
-        }
-        else{
-            bt_cancel.setVisibility(View.VISIBLE);
-        }
 
         startTimeText = (TextView)v.findViewById(R.id.start_time_text);
         endTimeText = (TextView)v.findViewById(R.id.end_time_text);
         dateText = (TextView)v.findViewById(R.id.date_text);
-
 
         Date date = new Date();
         startTimeText.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(date));
@@ -88,14 +81,25 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         // set default rule values
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (ruleId == -1) {
-            rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
-        }
-        else{
-            rule = myDB.selectById(ruleId);
-        }
+
+
+        Slider sl_discrete = (Slider)v.findViewById(R.id.volume_slider);
+        tv_discrete = (TextView)v.findViewById(R.id.slider_volume_text);
+        tv_discrete.setText(String.format("volume   %d", sl_discrete.getValue()));
+        sl_discrete.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+            @Override
+            public void onPositionChanged(Slider view, float oldPos, float newPos, int oldValue, int newValue) {
+                rule.setVolume(Integer.toString(newValue));
+                tv_discrete.setText(String.format("volume   %d", newValue));
+            }
+        });
+
 
         if (ruleId == -1){
+            bt_cancel.setVisibility(View.GONE);
+            editText.setText(" ");
+
+            rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
             bt_sumbit.setText("submit");
             bt_sumbit.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View view){
@@ -111,8 +115,19 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            sl_discrete.setValue(8, true);
+
         }
         else{
+            bt_cancel.setVisibility(View.VISIBLE);
+            rule = myDB.selectById(ruleId);
+            editText.setText(rule.getTitle());
+            startTimeText.setText(rule.getStart_time());
+            endTimeText.setText(rule.getEnd_time());
+            dateText.setText(rule.getDate());
+
+
             bt_sumbit.setText("update");
             final long passinId = ruleId;
             bt_sumbit.setOnClickListener(new View.OnClickListener(){
@@ -122,25 +137,13 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     Toast.makeText(main, "Rule Updated", Toast.LENGTH_SHORT).show();
                 }
             });
+            sl_discrete.setValue(Integer.parseInt(rule.getVolume()), true);
+
             ruleId = -1;
         }
-
-
-
-        Slider sl_discrete = (Slider)v.findViewById(R.id.volume_slider);
-        tv_discrete = (TextView)v.findViewById(R.id.slider_volume_text);
-        tv_discrete.setText(String.format("volume   %d", sl_discrete.getValue()));
-        sl_discrete.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
-            @Override
-            public void onPositionChanged(Slider view, float oldPos, float newPos, int oldValue, int newValue) {
-                rule.setVolume(Integer.toString(newValue));
-                tv_discrete.setText(String.format("volume   %d", newValue));
-            }
-        });
-
-
         return v;
     }
+
 
     @Override
     public void onPause() {
