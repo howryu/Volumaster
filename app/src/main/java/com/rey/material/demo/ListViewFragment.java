@@ -19,6 +19,9 @@ import android.widget.Toast;
 import com.daimajia.swipe.util.Attributes;
 import com.rey.material.demo.adapter.ListViewAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by howryu on 4/14/15.
@@ -29,7 +32,13 @@ public class ListViewFragment extends Fragment {
     private ListViewAdapter mAdapter;
     private Context mContext;
 
+    private MyDB myDB;
+    private List<Long> ruleIDs;
+    private List <Rule> rules;
+
     private CustomViewPager vp;
+
+    private SetRuleFragment srFrag;
 
     public static ListViewFragment newInstance(){
         ListViewFragment fragment = new ListViewFragment();
@@ -51,15 +60,18 @@ public class ListViewFragment extends Fragment {
             }
         }
 
-        mAdapter = new ListViewAdapter(mContext);
+        this.myDB = MyDB.getInstance(mContext);
+
+        mAdapter = new ListViewAdapter(mContext, myDB);
         mListView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
-//                vp.setCurrentItem(0);
-
+                rules = myDB.select();
+                srFrag.setUpdateId(rules.get(position).getId());
+                vp.setCurrentItem(2);
             }
         });
         mListView.setOnTouchListener(new View.OnTouchListener() {
@@ -116,4 +128,6 @@ public class ListViewFragment extends Fragment {
     public void setViewPager(CustomViewPager vp) {
         this.vp = vp;
     }
+
+    public void setSRFragment(SetRuleFragment sr) { this.srFrag = sr; }
 }
