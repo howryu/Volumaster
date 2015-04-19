@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.daimajia.swipe.util.Attributes;
 import com.rey.material.demo.adapter.ListViewAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,7 +32,6 @@ public class ListViewFragment extends Fragment {
     private Context mContext;
 
     private MyDB myDB;
-    private List<Long> ruleIDs;
     private List <Rule> rules;
 
     private CustomViewPager vp;
@@ -62,15 +60,15 @@ public class ListViewFragment extends Fragment {
 
         this.myDB = MyDB.getInstance(mContext);
 
-        mAdapter = new ListViewAdapter(mContext, myDB);
+        mAdapter = new ListViewAdapter(mContext);
         mListView.setAdapter(mAdapter);
         mAdapter.setMode(Attributes.Mode.Single);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
-                rules = myDB.select();
-                srFrag.setUpdateId(rules.get(position).getId());
+//                rules = myDB.select();
+//                srFrag.setUpdateId(rules.get(position).getId());
                 vp.setCurrentItem(2);
             }
         });
