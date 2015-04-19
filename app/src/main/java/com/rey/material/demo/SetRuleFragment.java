@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,25 +92,33 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
         if (ruleId == -1){
             bt_sumbit.setText("submit");
+            bt_sumbit.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+//                Log.d("submit", "editText" + editText.getText().toString());
+//                if (editText.getText().toString() != "")
+                    rule.setTitle(editText.getText().toString());
+                    myDB.insert(rule);
+                    Log.d("submit", rule.getTitle());
+                    Log.d("submit", rule.getDate());
+                    Log.d("submit", rule.getStart_time());
+                    Log.d("submit", rule.getEnd_time());
+                    Log.d("submit", rule.getVolume());
+                    Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         else{
             bt_sumbit.setText("update");
+            final long passinId = ruleId;
+            bt_sumbit.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    rule.setTitle(editText.getText().toString());
+                    // myDB.updateB...
+                }
+            });
             ruleId = -1;
         }
-        bt_sumbit.setOnClickListener(new OnClickListener(){
-            public void onClick(View view){
-//                Log.d("submit", "editText" + editText.getText().toString());
-//                if (editText.getText().toString() != "")
-                rule.setTitle(editText.getText().toString());
-                myDB.insert(rule);
-                Log.d("submit", rule.getTitle());
-                Log.d("submit", rule.getDate());
-                Log.d("submit", rule.getStart_time());
-                Log.d("submit", rule.getEnd_time());
-                Log.d("submit", rule.getVolume());
-                Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
 
         Slider sl_discrete = (Slider)v.findViewById(R.id.volume_slider);
