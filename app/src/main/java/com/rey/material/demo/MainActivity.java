@@ -376,6 +376,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
                     case CALENDARVIEW:
                         mFragments[position] = CalendarViewFragment.newInstance();
                         ((CalendarViewFragment) mFragments[position]).setViewPager(vp);
+                        ((CalendarViewFragment) mFragments[position]).setSRFragment(SetRuleFragment.newInstance());
                         break;
                     case LISTVIEW:
                         mFragments[position] = ListViewFragment.newInstance();

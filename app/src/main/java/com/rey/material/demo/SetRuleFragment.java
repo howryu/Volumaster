@@ -39,8 +39,10 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
     private MyDB myDB;
 
     private Rule rule;
+    private static long ruleId;
 
     public static SetRuleFragment newInstance(){
+        ruleId = -1;
         SetRuleFragment fragment = new SetRuleFragment();
         return fragment;
     }
@@ -48,11 +50,20 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("update", "ruleId when first created " + String.valueOf(ruleId));
+
         View v = inflater.inflate(R.layout.fragment_setrule, container, false);
         Button bt_start_time_picker = (Button)v.findViewById(R.id.button_start_time_picker);
         Button bt_end_time_picker = (Button)v.findViewById(R.id.button_end_time_picker);
         Button bt_sumbit = (Button)v.findViewById(R.id.button_submit);
         Button bt_date_picker = (Button)v.findViewById(R.id.button_date_picker);
+        Button bt_cancel = (Button)v.findViewById(R.id.button_cancel);
+        if (ruleId == -1){
+            bt_cancel.setVisibility(View.GONE);
+        }
+        else{
+            bt_cancel.setVisibility(View.VISIBLE);
+        }
 
         startTimeText = (TextView)v.findViewById(R.id.start_time_text);
         endTimeText = (TextView)v.findViewById(R.id.end_time_text);
@@ -79,6 +90,14 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
 
+
+        if (ruleId == -1){
+            bt_sumbit.setText("submit");
+        }
+        else{
+            bt_sumbit.setText("update");
+            ruleId = -1;
+        }
         bt_sumbit.setOnClickListener(new OnClickListener(){
             public void onClick(View view){
 //                Log.d("submit", "editText" + editText.getText().toString());
@@ -202,6 +221,12 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         }
         DialogFragment fragment = DialogFragment.newInstance(builder);
         fragment.show(getFragmentManager(), null);
+    }
+
+    public void setUpdateId(long id){
+
+        this.ruleId = id;
+        Log.d("update", "set " + String.valueOf(this.ruleId));
     }
 
 

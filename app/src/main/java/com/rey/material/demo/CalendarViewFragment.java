@@ -38,6 +38,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
     private CustomViewPager vp;
+    private SetRuleFragment srFrag;
 
     private MyDB myDB;
 
@@ -262,7 +263,8 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this.getActivity().getBaseContext(), "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        srFrag.setUpdateId(event.getId());
+        vp.setCurrentItem(0);
     }
 
     @Override
@@ -354,4 +356,5 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
 
     public void setViewPager(CustomViewPager vp){ this.vp = vp; }
 
+    public void setSRFragment(SetRuleFragment sr) { this.srFrag = sr; }
 }

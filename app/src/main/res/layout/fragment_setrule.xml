@@ -180,6 +180,20 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
             android:text="Submit"
             app:rd_delayClick="true"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"/>
+
+        <com.rey.material.widget.Button
+            style="@style/FlatColorButtonRippleStyle"
+            android:id="@+id/button_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="#FF2196F3"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            android:text="Cancel"
+            app:rd_delayClick="true"/>
 
     </LinearLayout>
 
