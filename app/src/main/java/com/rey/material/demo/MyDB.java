@@ -64,9 +64,17 @@ public class MyDB {
         return rules;
     }
 
-    public void updateById(long id, String startTime, String endTime, String volume) {
+    public Rule selectById(long id) {
+        String selection = MyDBHelper.COLUMN_ID + " = " + id;
+        Cursor cursor = database.query(MyDBHelper.TABLE_NAME, allColumns, selection, null, null, null, null);
+        cursor.moveToFirst();
+        return cursorToRule(cursor);
+    }
+
+    public void updateById(long id, String title, String startTime, String endTime, String volume) {
         ContentValues values = new ContentValues();
         values.put(MyDBHelper.COLUMN_ID, id);
+        values.put(MyDBHelper.COLUMN_TITLE, title);
         values.put(MyDBHelper.COLUMN_START_TIME, startTime);
         values.put(MyDBHelper.COLUMN_END_TIME, endTime);
         values.put(MyDBHelper.COLUMN_VOL, volume);
