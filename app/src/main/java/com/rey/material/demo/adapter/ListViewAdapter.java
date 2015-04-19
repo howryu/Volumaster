@@ -1,6 +1,12 @@
 package com.rey.material.demo.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +28,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     private Context mContext;
     private MyDB myDB;
     private List<Long> ruleIDs;
-    private List<String> ruleStrings;
+    private List <Rule> rules;
 
     public ListViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -66,19 +72,52 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     public void fillValues(int position, View convertView) {
         TextView t = (TextView)convertView.findViewById(R.id.position);
 //        Log.d("listview", "text = " + t.getText().toString());
-        String r;
-        r = "id = " + ruleIDs.get(position) + ", title = " + ruleStrings.get(position);
-        t.setText(r);
+        Rule rule = rules.get(position);
+        String text;
+        String str_volume_is = "Volume is ";
+        String str_in = " in ";
+        String str_from = " \nfrom ";
+        String str_to = " to ";
+        text = str_volume_is + rule.getVolume() + str_in + rule.getTitle() + str_from + rule.getStart_time() + str_to + rule.getEnd_time() + " " + rule.getDate();
+        final SpannableStringBuilder str = new SpannableStringBuilder(text);
+        int wordStart = str_volume_is.length() + rule.getVolume().length() + str_in.length();
+        int wordEnd = str_volume_is.length() + rule.getVolume().length() + str_in.length() + rule.getTitle().length();
+
+        str.setSpan(
+                new StyleSpan(Typeface.BOLD),
+                wordStart,
+                wordEnd,
+                SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+        );
+        str.setSpan(
+                new RelativeSizeSpan(2f),
+                wordStart,
+                wordEnd,
+                SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+        );
+
+        wordStart = str_volume_is.length() + rule.getVolume().length() + str_in.length() + rule.getTitle().length() + str_from.length();
+        wordEnd = str_volume_is.length() + rule.getVolume().length() + str_in.length() + rule.getTitle().length() + str_from.length() + rule.getStart_time().length();
+        str.setSpan(
+                new StyleSpan(Typeface.BOLD),
+                wordStart,
+                wordEnd,
+                SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+        );
+        str.setSpan(
+                new RelativeSizeSpan(1.5f),
+                wordStart,
+                wordEnd,
+                SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+        );
+        t.setText(str);
     }
 
     @Override
     public int getCount() {
-        List <Rule> rules = myDB.select();
+        rules = myDB.select();
         ruleIDs = new ArrayList<Long>();
-        ruleStrings = new ArrayList<String>();
         for (Rule r : rules) {
-            String tmp = r.getTitle();
-            ruleStrings.add(tmp);
             ruleIDs.add(r.getId());
             Log.d("listview", r.getId() + ", " + r.getStart_time() + ", " + r.getEnd_time() + ", " + r.getVolume());
         }

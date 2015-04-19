@@ -59,7 +59,7 @@ public class ListViewFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
 //                vp.setCurrentItem(0);
-                
+
             }
         });
         mListView.setOnTouchListener(new View.OnTouchListener() {
