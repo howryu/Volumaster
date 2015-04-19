@@ -30,9 +30,9 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     private List<Long> ruleIDs;
     private List <Rule> rules;
 
-    public ListViewAdapter(Context mContext) {
+    public ListViewAdapter(Context mContext, MyDB myDB) {
         this.mContext = mContext;
-        this.myDB = MyDB.getInstance(mContext);;
+        this.myDB = myDB;
     }
 
     @Override

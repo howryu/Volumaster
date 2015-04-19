@@ -381,6 +381,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
                     case LISTVIEW:
                         mFragments[position] = ListViewFragment.newInstance();
                         ((ListViewFragment) mFragments[position]).setViewPager(vp);
+                        ((ListViewFragment) mFragments[position]).setSRFragment(SetRuleFragment.newInstance());
                         break;
                 }
             }
