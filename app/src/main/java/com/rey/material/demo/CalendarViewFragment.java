@@ -264,7 +264,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         srFrag.setUpdateId(event.getId());
-        vp.setCurrentItem(0);
+        vp.setCurrentItem(2);
     }
 
     @Override

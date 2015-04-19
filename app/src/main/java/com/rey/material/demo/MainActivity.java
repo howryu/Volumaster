@@ -48,8 +48,8 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
     //    private Tab[] mItems = new Tab[]{Tab.PROGRESS, Tab.BUTTONS, Tab.FAB, Tab.SWITCHES, Tab.SLIDERS,
 //            Tab.SPINNERS, Tab.TEXTFIELDS, Tab.SNACKBARS, Tab.DIALOGS, Tab.SETRULE, Tab.SETTING,
 //            Tab.CALENDARVIEW, Tab.LISTVIEW};
-    private Tab[] mItems = new Tab[]{Tab.SETRULE, Tab.SETTING,
-            Tab.CALENDARVIEW, Tab.LISTVIEW};
+    private Tab[] mItems = new Tab[]{
+            Tab.CALENDARVIEW, Tab.LISTVIEW,Tab.SETRULE, Tab.SETTING};
 
     public static MyDB myDB;
 
