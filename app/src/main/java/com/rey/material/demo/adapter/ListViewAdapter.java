@@ -1,6 +1,7 @@
 package com.rey.material.demo.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,23 @@ import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.rey.material.demo.MyDB;
 import com.rey.material.demo.R;
+import com.rey.material.demo.Rule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
+    private MyDB myDB;
+    private List<Long> ruleIDs;
+    private List<String> ruleStrings;
 
     public ListViewAdapter(Context mContext) {
         this.mContext = mContext;
+        this.myDB = MyDB.getInstance(mContext);;
     }
 
     @Override
@@ -25,9 +35,9 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.listview_item, null);
-        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
 //        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
 //            @Override
 //            public void onOpen(SwipeLayout layout) {
@@ -43,7 +53,10 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "click delete, position is " + position, Toast.LENGTH_SHORT).show();
+                myDB.deleteById(ruleIDs.get(position).longValue());
+                swipeLayout.close();
+                // TODO need to reload
             }
         });
         return v;
@@ -52,12 +65,24 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     @Override
     public void fillValues(int position, View convertView) {
         TextView t = (TextView)convertView.findViewById(R.id.position);
-        t.setText((position + 1) + ".");
+//        Log.d("listview", "text = " + t.getText().toString());
+        String r;
+        r = "id = " + ruleIDs.get(position) + ", title = " + ruleStrings.get(position);
+        t.setText(r);
     }
 
     @Override
     public int getCount() {
-        return 50;
+        List <Rule> rules = myDB.select();
+        ruleIDs = new ArrayList<Long>();
+        ruleStrings = new ArrayList<String>();
+        for (Rule r : rules) {
+            String tmp = r.getTitle();
+            ruleStrings.add(tmp);
+            ruleIDs.add(r.getId());
+            Log.d("listview", r.getId() + ", " + r.getStart_time() + ", " + r.getEnd_time() + ", " + r.getVolume());
+        }
+        return rules.size();
     }
 
     @Override
