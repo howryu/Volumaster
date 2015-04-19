@@ -75,6 +75,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         dateText.setText(SimpleDateFormat.getDateInstance().format(date));
 
         final EditText editText = (EditText)v.findViewById(R.id.textfield_with_label);
+        // editText.clearComposingText();
 
         main = this.getActivity();
 
@@ -87,8 +88,12 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
         // set default rule values
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
-
+        if (ruleId == -1) {
+            rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
+        }
+        else{
+            rule = myDB.selectById(ruleId);
+        }
 
         if (ruleId == -1){
             bt_sumbit.setText("submit");
@@ -112,8 +117,9 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
             final long passinId = ruleId;
             bt_sumbit.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View view){
-                    rule.setTitle(editText.getText().toString());
-                    // myDB.updateB...
+                    rule.setTitle( editText.getText().toString());
+                    myDB.updateById(passinId, rule.getTitle(), rule.getStart_time(), rule.getEnd_time(), rule.getVolume());
+                    Toast.makeText(main, "Rule Updated", Toast.LENGTH_SHORT).show();
                 }
             });
             ruleId = -1;
