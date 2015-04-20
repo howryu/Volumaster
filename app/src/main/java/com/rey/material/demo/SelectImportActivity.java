@@ -2,8 +2,12 @@ package com.rey.material.demo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +135,36 @@ public class SelectImportActivity extends ActionBarActivity {
              
                String event = allEvents.get(position);
                holder.code.setText(event);
+
+                String[] info = event.split("#");
+                String summary = info[0];
+                String date = info[1].substring(0, 10);
+                String start = info[1].substring(11, 16);
+                String end = info[2].substring(11, 16);
+                Rule rule = new Rule(summary, date, start, end, "0");
+
+                String text;
+                String str_new_line = "\n";
+                String str_tab = "  ";
+                text = rule.getStart_time() + str_tab + rule.getTitle() + str_new_line + rule.getEnd_time() + str_tab + rule.getDate();
+                final SpannableStringBuilder str = new SpannableStringBuilder(text);
+
+                int wordStart = rule.getStart_time().length() + str_tab.length();
+                int wordEnd = rule.getStart_time().length() + str_tab.length() + rule.getTitle().length();
+
+                str.setSpan(
+                        new StyleSpan(Typeface.BOLD),
+                        wordStart,
+                        wordEnd,
+                        SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+                );
+                str.setSpan(
+                        new RelativeSizeSpan(2f),
+                        wordStart,
+                        wordEnd,
+                        SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+                );
+
                holder.name.setText("");
 
                holder.name.setChecked(true);
