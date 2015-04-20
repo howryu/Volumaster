@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
     public static MyDB myDB;
 
     public final static String EVENTSLIST = "com.rey.material.demo.EVENTSLIST";
+    public final static String CHECKED = "com.rey.material.demo.CHECKED";
     public final static int SYNC_CODE = 1;
 
 
@@ -130,6 +131,8 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
 //        mDrawerAdapter.setSelected(Tab.PROGRESS);
         mDrawerAdapter.setSelected(Tab.SETRULE);
         vp.setCurrentItem(0);
+
+        getChecked();
     }
 
     @Override
@@ -202,6 +205,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         public String toString(){
             return name;
         }
+
 
     }
 
@@ -403,7 +407,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
 
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("Calendar", "activityresult" + "request " + requestCode + "result " + resultCode);
         if (requestCode == SYNC_CODE && resultCode == RESULT_OK) {
@@ -425,6 +429,25 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
                 }
             }
 
+        }
+    }*/
+
+    private void getChecked() {
+        Intent intent = getIntent();
+        ArrayList<String> eventsToBeInserted = intent.getStringArrayListExtra(CHECKED);
+        if (eventsToBeInserted == null){
+            return;
+        }
+        Log.d("check size", "size = " + eventsToBeInserted.size());
+        for (int i = 0; i < eventsToBeInserted.size(); i++) {
+            String eventInfo = eventsToBeInserted.get(i);
+            String[] info = eventInfo.split("#");
+            String summary = info[0];
+            String date = info[1].substring(0, 10);
+            String start = info[1].substring(11, 16);
+            String end = info[2].substring(11, 16);
+            Rule r = new Rule(summary, date, start, end, "0");
+            myDB.insert(r);
         }
     }
 }
