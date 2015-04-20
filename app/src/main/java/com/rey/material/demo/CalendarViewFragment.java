@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
@@ -284,7 +283,7 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
                myDB.deleteById(ruleId);
                mWeekView.goToToday();
                //current.onCreateView(null, null, null);
-               Toast.makeText(mContext, "Rule Deleted Successfully", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(mContext, "Rule Deleted Successfully", Toast.LENGTH_SHORT).show();
            }
         });
 

@@ -67,8 +67,8 @@ public class ListViewFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
-//                rules = myDB.select();
-//                srFrag.setUpdateId(rules.get(position).getId());
+                rules = myDB.select();
+                srFrag.setUpdateId(rules.get(position).getId());
                 vp.setCurrentItem(2);
             }
         });
