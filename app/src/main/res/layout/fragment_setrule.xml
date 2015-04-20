@@ -45,8 +45,8 @@
             android:gravity="center"
             android:padding="16dp"
             app:sl_stepValue="1"
-            app:sl_maxValue="15"
-            app:sl_value="8"/>
+            app:sl_maxValue="7"
+            app:sl_value="4"/>
 
         <TextView
             android:id="@+id/slider_volume_text"

@@ -341,13 +341,13 @@ public class CalendarViewFragment extends Fragment implements WeekView.MonthChan
     }
 
     private int volumeToColor(int volume){
-        if (volume <= 3){
+        if (volume <= 1){
             return R.color.event_color_01;
         }
-        else if (volume > 3 && volume <=7){
+        else if (volume > 1 && volume <=3){
             return R.color.event_color_03;
         }
-        else if (volume >7 && volume <=11){
+        else if (volume >3 && volume <=5){
             return R.color.event_color_04;
         }
         else{

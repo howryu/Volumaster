@@ -116,7 +116,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
             Log.d("TextTitle", editText.getText().toString());
 
-            rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
+            rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "3");
             bt_sumbit.setText("submit");
             final Context mcontext = container.getContext();
             bt_sumbit.setOnClickListener(new View.OnClickListener(){
@@ -177,7 +177,7 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     }
             });
 
-            sl_discrete.setValue(8, true);
+            sl_discrete.setValue(3, true);
 
         }
         else{
