@@ -2,6 +2,11 @@ package com.rey.material.demo;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +30,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by howryu on 4/13/15.
@@ -112,19 +118,63 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
 
             rule = new Rule("Rule", dateFormat.format(date), timeFormat.format(date), timeFormat.format(date), "8");
             bt_sumbit.setText("submit");
+            final Context mcontext = container.getContext();
             bt_sumbit.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View view){
 //                Log.d("submit", "editText" + editText.getText().toString());
-//                if (editText.getText().toString() != "")
                     rule.setTitle(editText.getText().toString());
-                    myDB.insert(rule);
+
+                    // register alarm
+                    // set start time alarm
+                    Intent intentAlarm_start = new Intent(mcontext, AlarmReceiver.class);
+                    intentAlarm_start.putExtra(AlarmReceiver.VOLUME, Integer.parseInt(rule.getVolume()));
+                    PendingIntent pendingIntent_start;
+                    pendingIntent_start = PendingIntent.getBroadcast(mcontext, 0, intentAlarm_start, 0);
+                    AlarmManager manager = (AlarmManager) mcontext.getSystemService(Context.ALARM_SERVICE);
+                    long currTime = System.currentTimeMillis();
+                    String dateTimeStr = rule.getDate() + " " + rule.getStart_time();
+                    DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.ENGLISH);
+                    Date timestamp = new Date();
+                    try {
+                        timestamp = dateTimeFormat.parse(dateTimeStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    manager.setExact(AlarmManager.RTC_WAKEUP, timestamp.getTime(), pendingIntent_start);
+
+                    // get current volume
+                    AudioManager am;
+                    am = (AudioManager) mcontext.getSystemService(Context.AUDIO_SERVICE);
+                    int curV = am.getStreamVolume(AudioManager.STREAM_RING);
+
+                    // set end time alarm
+                    Intent intentAlarm_end = new Intent(mcontext, AlarmReceiver.class);
+                    intentAlarm_end.putExtra(AlarmReceiver.VOLUME, curV);
+                    PendingIntent pendingIntent_end;
+                    pendingIntent_end = PendingIntent.getBroadcast(mcontext, 0, intentAlarm_end, 0);
+                    dateTimeStr = rule.getDate() + " " + rule.getEnd_time();
+                    try {
+                        timestamp = dateTimeFormat.parse(dateTimeStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    currTime = System.currentTimeMillis();
+                    manager.setExact(AlarmManager.RTC_WAKEUP, currTime + 20 * 1000, pendingIntent_end);
+
+                    try {
+                        myDB.insert(rule, mcontext);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
                     Log.d("submit", rule.getTitle());
                     Log.d("submit", rule.getDate());
                     Log.d("submit", rule.getStart_time());
                     Log.d("submit", rule.getEnd_time());
                     Log.d("submit", rule.getVolume());
                     Toast.makeText(main, "Rule Submitted", Toast.LENGTH_SHORT).show();
-                }
+                    }
             });
 
             sl_discrete.setValue(8, true);

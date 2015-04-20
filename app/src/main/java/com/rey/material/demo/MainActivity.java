@@ -28,6 +28,7 @@ import com.rey.material.widget.TabPageIndicator;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements ToolbarManager.OnToolbarGroupChangedListener {
@@ -417,7 +418,11 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
                 String start = info[1].substring(11,16);
                 String end = info[2].substring(11,16);
                 Rule r = new Rule(summary, date, start, end, "0");
-                myDB.insert(r);
+                try {
+                    myDB.insert(r, this);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
         }

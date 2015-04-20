@@ -1,13 +1,24 @@
 package com.rey.material.demo;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
+import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 
 /**
  * Created by zhaoheri on 3/5/15.
@@ -38,7 +49,7 @@ public class MyDB {
         dbHelper.close();
     }
 
-    public void insert(Rule rule) {
+    public void insert(Rule rule, Context mcontext) throws ParseException {
         ContentValues values = new ContentValues();
         values.put(MyDBHelper.COLUMN_TITLE, rule.getTitle());
         values.put(MyDBHelper.COLUMN_DATE, rule.getDate());
