@@ -148,18 +148,18 @@ public class SetRuleFragment extends Fragment implements View.OnClickListener{
                     int curV = am.getStreamVolume(AudioManager.STREAM_RING);
 
                     // set end time alarm
-                    Intent intentAlarm_end = new Intent(mcontext, AlarmReceiver.class);
-                    intentAlarm_end.putExtra(AlarmReceiver.VOLUME, curV);
-                    PendingIntent pendingIntent_end;
-                    pendingIntent_end = PendingIntent.getBroadcast(mcontext, 0, intentAlarm_end, 0);
-                    dateTimeStr = rule.getDate() + " " + rule.getEnd_time();
-                    try {
-                        timestamp = dateTimeFormat.parse(dateTimeStr);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    currTime = System.currentTimeMillis();
-                    manager.setExact(AlarmManager.RTC_WAKEUP, currTime + 20 * 1000, pendingIntent_end);
+//                    Intent intentAlarm_end = new Intent(mcontext, AlarmReceiver.class);
+//                    intentAlarm_end.putExtra(AlarmReceiver.VOLUME, curV);
+//                    PendingIntent pendingIntent_end;
+//                    pendingIntent_end = PendingIntent.getBroadcast(mcontext, 0, intentAlarm_end, 0);
+//                    dateTimeStr = rule.getDate() + " " + rule.getEnd_time();
+//                    try {
+//                        timestamp = dateTimeFormat.parse(dateTimeStr);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    currTime = System.currentTimeMillis();
+//                    manager.setExact(AlarmManager.RTC_WAKEUP, currTime + 20 * 1000, pendingIntent_end);
 
                     try {
                         myDB.insert(rule, mcontext);
