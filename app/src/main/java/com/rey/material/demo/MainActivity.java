@@ -132,7 +132,11 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         mDrawerAdapter.setSelected(Tab.SETRULE);
         vp.setCurrentItem(0);
 
-        getChecked();
+        try {
+            getChecked();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -432,7 +436,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
         }
     }*/
 
-    private void getChecked() {
+    private void getChecked() throws ParseException {
         Intent intent = getIntent();
         ArrayList<String> eventsToBeInserted = intent.getStringArrayListExtra(CHECKED);
         if (eventsToBeInserted == null){
@@ -447,7 +451,7 @@ public class MainActivity extends ActionBarActivity implements ToolbarManager.On
             String start = info[1].substring(11, 16);
             String end = info[2].substring(11, 16);
             Rule r = new Rule(summary, date, start, end, "0");
-            myDB.insert(r);
+            myDB.insert(r, this);
         }
     }
 }
