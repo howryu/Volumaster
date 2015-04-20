@@ -32,6 +32,15 @@
                 android:value="com.rey.material.demo.MainActivity" />
         </activity>
 
+        <activity
+            android:name="com.rey.material.demo.SelectImportActivity"
+            android:label="loginGoogle"
+            android:parentActivityName="com.rey.material.demo.UpcomingEventsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rey.material.demo.UpcomingEventsActivity" />
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

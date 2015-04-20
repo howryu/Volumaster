@@ -13,8 +13,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -55,6 +53,8 @@ public class UpcomingEventsActivity extends Activity {
 
     private ArrayList<String> eventsList = new ArrayList<String>();
 
+    private UpcomingEventsActivity ac;
+
 
     /**
      * Create the main activity.
@@ -65,6 +65,7 @@ public class UpcomingEventsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.upcomingevents);
+        ac = this;
 
         mStatusText = (TextView)findViewById(R.id.status_text);
         mEventText = (TextView)findViewById(R.id.events_text);
@@ -83,14 +84,14 @@ public class UpcomingEventsActivity extends Activity {
 
         Button bt_import = (Button)findViewById(R.id.button_import);
 
-        bt_import.setOnClickListener(new View.OnClickListener(){
+       /* bt_import.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent intent = getIntent();
                 intent.putStringArrayListExtra(MainActivity.EVENTSLIST, eventsList);
                 setResult(RESULT_OK, intent);
                 finish();
             }
-        });
+        });*/
 
     }
 
@@ -210,17 +211,32 @@ public class UpcomingEventsActivity extends Activity {
                 } else if (eventStrings.size() == 0) {
                     mStatusText.setText("No upcoming events found.");
                 } else {
-                    mStatusText.setText("Your upcoming events retrieved using" +
+                /*    mStatusText.setText("Your upcoming events retrieved using" +
                             " the Google Calendar API:");
-                    mEventText.setText(TextUtils.join("\n\n", eventStrings));
+                    showItem(eventStrings);*/
                     if (eventStrings.size() != eventsList.size())
                         for (int i=0; i<eventStrings.size(); i++){
                             eventsList.add(eventStrings.get(i));
                         }
+
+                    Intent intent = new Intent(ac, SelectImportActivity.class);
+                    intent.putStringArrayListExtra(MainActivity.EVENTSLIST, eventsList);
+                    startActivity(intent);
                 }
             }
         });
     }
+
+    /*private void showItem(List<String> eventStrings){
+        for (int i=0; i<eventStrings.size(); i++){
+            String item = eventStrings.get(i);
+            String[] info = item.split("#");
+            String summary = info[0];
+            String date = info[1].substring(0, 10);
+            String start = info[1].substring(11,16);
+            String end = info[2].substring(11,16);
+        }
+    }*/
 
     /**
      * Show a status message in the list header TextView; called from background
