@@ -9,10 +9,11 @@
         android:text="All Events Found in Google Calendar" android:textSize="20sp" />
 
     <com.rey.material.widget.Button
-        style="@style/FlatColorButtonRippleStyle"
+        style="@style/RaiseColorButtonRippleStyle"
         android:id="@+id/button_import_selected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFFFF"
         android:text="Import Selected"/>
 
     <ListView android:id="@+id/listView1" android:layout_width="fill_parent"

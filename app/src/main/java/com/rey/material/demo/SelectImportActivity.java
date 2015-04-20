@@ -134,7 +134,7 @@ public class SelectImportActivity extends ActionBarActivity {
                }
              
                String event = allEvents.get(position);
-               holder.code.setText(event);
+
 
                 String[] info = event.split("#");
                 String summary = info[0];
@@ -164,7 +164,7 @@ public class SelectImportActivity extends ActionBarActivity {
                         wordEnd,
                         SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
                 );
-
+                holder.code.setText(str);
                holder.name.setText("");
 
                holder.name.setChecked(true);
